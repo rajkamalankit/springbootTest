@@ -23,6 +23,11 @@ public class HomeController {
         model.addAttribute("name","Rajkamal");
         return "signup";
     }
+    @GetMapping("/todo")
+    public String todo(Model model){
+        model.addAttribute("name","Rajkamal");
+        return "todo";
+    }
     /*@GetMapping("/social")
     public String social(Model model){
         model.addAttribute("name","Rajkamal");

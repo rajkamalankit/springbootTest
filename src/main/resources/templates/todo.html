@@ -74,7 +74,6 @@
             <ul class="nav navbar-nav">
                 <li><a href="/about">about</a></li>
                 <li><a href="/signup">signup</a></li>
-                <li><a href="/todo">Todo</a></li>
             </ul>
         </div>
     </div>
@@ -87,36 +86,26 @@
         <p th:text="'Hello, ' + ${name} + '!'" />
     </div>
     <div class="wrapper">
-
-        <form class="form-signin" action="/login" method="post" name="userForm">
-            <h2 class="form-signin-heading">Signup page</h2>
+        <form class="form-signin" action="/todo" method="post" name="userForm">
+            <h2 class="form-signin-heading">Todo list</h2>
             <div>
-                <input type="text" class="form-control" name="username" placeholder="User Name" required="" autofocus="" />
+                <input type="text" class="form-control" name="username" placeholder="Title of task" required="" autofocus="" />
             </div>
             <div style="margin-top: 5px;">
-                <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
+                <input type="text" class="form-control" name="task" placeholder="type about task" required=""/>
             </div>
             <div style="margin-top: 5px;">
-                <input type="password" class="form-control" name="password" placeholder="conform Password" required=""/>
+                <input type="datetime-local" class="form-control" name="task" placeholder="datetime" required=""/>
             </div>
             <div style="margin-top: 5px;">
-                <input type="varchar" class="form-control" name="email" placeholder="Enter email" required=""/>
-            </div>
-            <div style="margin-top: 5px;">
-                <input type="date" class="form-control" name="email" placeholder="select" required=""/>
-            </div>
-            <div style="margin-top: 5px;">
-                <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe" /> Remember me
+                <button class="btn btn-lg btn-primary btn-block" type="submit">edit task</button>
             </div>
             <input type="hidden" name="regId" th:value="12" />
             <input type="hidden" name="mobileApkVersion" th:value="1.0.0" />
             <input type="hidden" name="source" th:value="SmartChat" />
             <div class="alert alert-danger" th:if="${error}" style="margin-top: 15px;"><p th:text=" ${error}" /></div>
             <div style="margin-top: 5px;">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Signup</button>
-            </div>
-            <div style="margin-top: 5px;">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">login</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Add task</button>
             </div>
         </form>
         &copy; NOVEL KINGDOM
