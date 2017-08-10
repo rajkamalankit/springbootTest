@@ -18,6 +18,11 @@ public class HomeController {
         model.addAttribute("name","Rajkamal");
         return "about";
     }
+    @GetMapping("/signup")
+    public String signup(Model model){
+        model.addAttribute("name","Rajkamal");
+        return "signup";
+    }
     /*@GetMapping("/social")
     public String social(Model model){
         model.addAttribute("name","Rajkamal");
