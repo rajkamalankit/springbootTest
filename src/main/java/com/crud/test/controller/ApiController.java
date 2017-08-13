@@ -1,11 +1,30 @@
 package com.crud.test.controller;
 
+import com.crud.test.dao.ToDoListRepository;
+import com.crud.test.dao.UserNameRepository;
+import com.crud.test.domain.ToDoListDomain;
+import com.crud.test.domain.UserNameDomain;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
+import javax.transaction.Transactional;
+import java.util.List;
+
 
 @RestController
+@RequestMapping
 public class ApiController {
+
+    private final ToDoListRepository toDoListRepository;
+    private final UserNameRepository userNameRepository;
+    @Autowired
+    public ApiController(ToDoListRepository toDoListRepository,UserNameRepository userNameRepository) {
+        this.toDoListRepository = toDoListRepository;
+        this.userNameRepository=userNameRepository;
+    }
+
+
+
 
     @RequestMapping(value = "test", method = RequestMethod.GET)
     public String test() {
@@ -19,6 +38,38 @@ public class ApiController {
         a = a.reverse();
         return a.toString();
     }
+
+    @PostMapping(path = "addToDo")
+    @ResponseBody
+    public ToDoListDomain addToDo(@RequestBody ToDoListDomain toDoListDomain) {
+        toDoListRepository.save(toDoListDomain);
+       return toDoListDomain;
+    }
+    // for user name table
+    @PostMapping(path="addUser")
+    @ResponseBody
+    public UserNameDomain addUser(@RequestBody UserNameDomain userNameDomain){
+        userNameRepository.save(userNameDomain);
+        return userNameDomain;
+    }
+
+    @GetMapping(path = "getToDo")
+    @ResponseBody
+    public List<ToDoListDomain> getToDo() {
+       return toDoListRepository.findAll();
+    }
+    // for user name table
+    @GetMapping (path = "getUser")
+    @ResponseBody
+    public List<UserNameDomain> getUser(){return userNameRepository.findAll();}
+    //
+    @RequestMapping(value = "getToDoById/{id}", method = RequestMethod.GET)
+    public ToDoListDomain getToDoById(@PathVariable Integer id) {
+        return toDoListRepository.findOne(id);
+    }
+
+    @RequestMapping(value="getUserById/{id}",method = RequestMethod.GET)
+    public UserNameDomain getUserBYId(@PathVariable Integer id){return userNameRepository.findOne(id);}
 
     @RequestMapping(value = "calculater/{a}/{b}/{c}", method = RequestMethod.GET)
     public String calculater(@PathVariable Integer a, @PathVariable Integer b, @PathVariable Integer c) {
