@@ -1,0 +1,5 @@
+<root>
+    <item name='javax.persistence.GeneratedValue javax.persistence.GenerationType strategy()'>
+        <annotation name='org.jetbrains.annotations.Nullable'/>
+    </item>
+</root>

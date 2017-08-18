@@ -28,10 +28,10 @@ public class HomeController {
         model.addAttribute("name","Rajkamal");
         return "todo";
     }
-    /*@GetMapping("/social")
-    public String social(Model model){
+    @GetMapping("/Users")
+    public String Users(Model model){
         model.addAttribute("name","Rajkamal");
-        return "social";
-    }*/
+        return "UsersDomain";
+    }
 
 }

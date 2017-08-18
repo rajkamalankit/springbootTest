@@ -1,13 +1,15 @@
 package com.crud.test.controller;
 
+import com.crud.test.dao.DetailUserRepository;
 import com.crud.test.dao.ToDoListRepository;
 import com.crud.test.dao.UserNameRepository;
+import com.crud.test.domain.DetailUserDomain;
 import com.crud.test.domain.ToDoListDomain;
 import com.crud.test.domain.UserNameDomain;
+import com.crud.test.services.interfaces.ITodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -17,10 +19,14 @@ public class ApiController {
 
     private final ToDoListRepository toDoListRepository;
     private final UserNameRepository userNameRepository;
+    private final DetailUserRepository detailUserRepository;
+    private final ITodoService apiServices;
     @Autowired
-    public ApiController(ToDoListRepository toDoListRepository,UserNameRepository userNameRepository) {
+    public ApiController(ITodoService apiServices, ToDoListRepository toDoListRepository, UserNameRepository userNameRepository, DetailUserRepository detailUserRepository) {
         this.toDoListRepository = toDoListRepository;
         this.userNameRepository=userNameRepository;
+        this.detailUserRepository=detailUserRepository;
+        this.apiServices = apiServices;
     }
 
 
@@ -42,8 +48,7 @@ public class ApiController {
     @PostMapping(path = "addToDo")
     @ResponseBody
     public ToDoListDomain addToDo(@RequestBody ToDoListDomain toDoListDomain) {
-        toDoListRepository.save(toDoListDomain);
-       return toDoListDomain;
+       return apiServices.addToDoList(toDoListDomain);
     }
     // for user name table
     @PostMapping(path="addUser")
@@ -52,21 +57,37 @@ public class ApiController {
         userNameRepository.save(userNameDomain);
         return userNameDomain;
     }
+    //this function for detail user
+    @PostMapping(path="detailuser")
+    @ResponseBody
+    public DetailUserDomain detailuser(@RequestBody DetailUserDomain detailUserDomain){
+        detailUserRepository.save(detailUserDomain);
+                return detailUserDomain;
+    }
 
     @GetMapping(path = "getToDo")
     @ResponseBody
     public List<ToDoListDomain> getToDo() {
        return toDoListRepository.findAll();
     }
+
     // for user name table
     @GetMapping (path = "getUser")
     @ResponseBody
     public List<UserNameDomain> getUser(){return userNameRepository.findAll();}
-    //
+    //for detail user
+    @GetMapping(path = "getdetailuser")
+    @ResponseBody
+    public List<DetailUserDomain> getdetailuser(){return detailUserRepository.findAll();}
+
     @RequestMapping(value = "getToDoById/{id}", method = RequestMethod.GET)
     public ToDoListDomain getToDoById(@PathVariable Integer id) {
         return toDoListRepository.findOne(id);
     }
+
+    //for detail user
+    @RequestMapping(value ="getdetailuserById/{id}",method = RequestMethod.GET)
+    public DetailUserDomain getdetailuserById(@PathVariable Integer id) {return detailUserRepository.findOne(id); }
 
     @RequestMapping(value="getUserById/{id}",method = RequestMethod.GET)
     public UserNameDomain getUserBYId(@PathVariable Integer id){return userNameRepository.findOne(id);}
