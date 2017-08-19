@@ -1,4 +1,5 @@
 package com.crud.test.services;
+import com.crud.test.config.Encryption;
 import com.crud.test.dao.RecentVisitorRepository;
 import com.crud.test.dao.UsersRepository;
 import com.crud.test.domain.fostergem.RecentVisitorsDomain;
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Component;
 public class UsersService implements IUsersService{
     private final UsersRepository usersRepository;
     private final RecentVisitorRepository recentVisitorRepository;
+    private final Encryption encryption;
     @Autowired
-    public UsersService(UsersRepository usersRepository, RecentVisitorRepository recentVisitorRepository){
+    public UsersService(UsersRepository usersRepository, RecentVisitorRepository recentVisitorRepository, Encryption encryption){
         this.usersRepository = usersRepository;
         this.recentVisitorRepository = recentVisitorRepository;
+        this.encryption = encryption;
     }
 
     @Override
@@ -35,6 +38,8 @@ public class UsersService implements IUsersService{
             if(user != null){
                 throw new Exception("User already exists with this email");
             }
+            String password = encryption.md5(usersDomain.getPassword());
+            usersDomain.setPassword(password);
             return usersRepository.save(usersDomain);
         } catch (Exception e){
             System.out.print(e.getMessage());
@@ -64,7 +69,8 @@ public class UsersService implements IUsersService{
             {
                 throw new Exception("Enter correct password");
             }
-            UsersDomain user = usersRepository.findByEmailAndPassword(usersDomain.getEmail(),usersDomain.getPassword());
+            String password = encryption.md5(usersDomain.getPassword());
+            UsersDomain user = usersRepository.findByEmailAndPassword(usersDomain.getEmail(),password);
             if(user==null)
             {
                 throw new Exception("Either user name or password is invalid.");
