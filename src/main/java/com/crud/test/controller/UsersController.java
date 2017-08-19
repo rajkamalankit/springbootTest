@@ -30,5 +30,10 @@ public class UsersController {
     {
         return usersService.saveRecentVisitors(recentVisitorsDomain);
     }
+    @RequestMapping(path = "login")
+    @ResponseBody
+    public UsersDomain login(@RequestBody UsersDomain usersDomain){
+        return usersService.login(usersDomain);
+    }
 
 }

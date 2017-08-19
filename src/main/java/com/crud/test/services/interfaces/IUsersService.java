@@ -8,4 +8,6 @@ public interface IUsersService {
     public RecentVisitorsDomain getRecentVisitors(RecentVisitorsDomain recentVisiorsDomain);
 
     RecentVisitorsDomain saveRecentVisitors(RecentVisitorsDomain recentVisitorsDomain);
+
+    UsersDomain login(UsersDomain usersDomain);
 }

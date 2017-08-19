@@ -51,5 +51,28 @@ public class UsersService implements IUsersService{
     public RecentVisitorsDomain saveRecentVisitors(RecentVisitorsDomain recentVisitorsDomain) {
         return recentVisitorRepository.save(recentVisitorsDomain);
     }
+
+    @Override
+    public UsersDomain login(UsersDomain usersDomain) {
+        try{
+            if(usersDomain.getEmail()==null)
+            {
+                throw new Exception("Please Enter valid Email Address");
+            }
+            if(usersDomain.getPassword()==null)
+            {
+                throw new Exception("Enter correct password");
+            }
+            UsersDomain user = usersRepository.findByEmailAndPassword(usersDomain.getEmail(),usersDomain.getPassword());
+            if(user==null)
+            {
+                throw new Exception("Either user name or password is invalid.");
+            }
+            return user;
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+        }
+        return null;
+    }
 }
 
