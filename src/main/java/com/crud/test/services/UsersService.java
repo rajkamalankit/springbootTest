@@ -59,8 +59,7 @@ public class UsersService implements IUsersService{
     //4262/6243/4475
 
     @Override
-    public UsersDomain login(UsersDomain usersDomain) {
-        try{
+    public UsersDomain login(UsersDomain usersDomain) throws Exception {
             if(usersDomain.getEmail()==null)
             {
                 throw new Exception("Please Enter valid Email Address");
@@ -76,10 +75,6 @@ public class UsersService implements IUsersService{
                 throw new Exception("Either user name or password is invalid.");
             }
             return user;
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
-        return null;
     }
 }
 

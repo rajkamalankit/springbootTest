@@ -9,5 +9,5 @@ public interface IUsersService {
 
     RecentVisitorsDomain saveRecentVisitors(RecentVisitorsDomain recentVisitorsDomain);
 
-    UsersDomain login(UsersDomain usersDomain);
+    UsersDomain login(UsersDomain usersDomain) throws Exception;
 }
